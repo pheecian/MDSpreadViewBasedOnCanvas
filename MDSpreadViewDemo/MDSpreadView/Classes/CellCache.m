@@ -1,0 +1,52 @@
+//
+//  CellCache.m
+//  company-ess-ios
+//
+//  Created by worksap on 10/27/16.
+//  Copyright © 2016 worksap. All rights reserved.
+//
+
+#import "CellCache.h"
+
+@implementation CellCache
+-(id)init
+{
+    self = [super init];
+    if (!self) return nil;
+    
+    dict = [[NSMutableDictionary alloc] init];
+    
+    return self;
+    
+}
+
+-(void)putCell:(MDSpreadViewCell *)cell row:(int)row column:(int)column{
+    NSMutableDictionary * dictSecond = [dict objectForKey:[NSNumber numberWithInt:row]];
+    if(dictSecond){
+        [dictSecond setObject:cell forKey:[NSNumber numberWithInt:column]];
+    } else {
+        NSMutableDictionary * dictSecond = [[NSMutableDictionary alloc] init];
+        [dictSecond setObject:cell forKey:[NSNumber numberWithInt:column]];
+        [dict setObject:dictSecond forKey:[NSNumber numberWithInt:row]];
+        
+    }
+    
+    
+    
+}
+
+
+-(MDSpreadViewCell *)getCell:(int)row column:(int)column{
+    NSMutableDictionary * dictSecond = [dict objectForKey:[NSNumber numberWithInt:row]];
+    if(!dictSecond){
+        return NULL;
+    }
+    return [dictSecond objectForKey:[NSNumber numberWithInt:column]];
+}
+
+-(void)clearAll{
+    [dict removeAllObjects];
+}
+
+@end
+
