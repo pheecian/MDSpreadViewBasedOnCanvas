@@ -62,8 +62,6 @@ typedef NS_ENUM(NSUInteger, MDSpreadViewSelectionMode) {
 
 
 
-//Scroll
-- (void)spreadView:(MDSpreadView *)aSpreadView tag:(int)tag;
 
 
 
@@ -237,7 +235,7 @@ enum {MDSpreadViewSelectWholeSpreadView = -1};
     
     NSMutableArray *_selectedCells;
     MDSpreadViewSelection *_currentSelection;
-    MDSpreadViewSelection *_currentComment;
+    
     
     MDSpreadViewSelectionMode selectionMode;
     
@@ -248,27 +246,16 @@ enum {MDSpreadViewSelectWholeSpreadView = -1};
     BOOL allowsSelection;
     BOOL allowsMultipleSelection;
     
-    BOOL rowHeaderHide;
-    BOOL columnHeaderHide;
-    NSInteger rowFrozen;
-    NSInteger columnFrozen;
-    NSInteger availableRow;
-    NSInteger availableColumn;
-    NSInteger tag;
-    BOOL scaleAndSetContentOffset;
+   
     
  
     
 }
 
-@property (nonatomic) NSInteger rowFrozen;
-@property (nonatomic) NSInteger columnFrozen;
-@property (nonatomic) NSInteger tag;
-@property (nonatomic) BOOL scaleAndSetContentOffset;
-@property (nonatomic) NSInteger availableRow;
-@property (nonatomic) NSInteger availableColumn;
-@property (nonatomic) BOOL rowHeaderHide;
-@property (nonatomic) BOOL columnHeaderHide;
+
+
+
+
 @property (nonatomic, weak)  id <MDSpreadViewDataSource> dataSource;
 @property (nonatomic, weak)  id <MDSpreadViewDelegate> delegate;
 
@@ -371,7 +358,7 @@ enum {MDSpreadViewSelectWholeSpreadView = -1};
 
 
 
-- (void)updateRowColumnHeader:(int)fromRow toRow:(int)toRow fromColumn:(int)fromColumn toColumn:(int)toColumn;
+
 
 
 

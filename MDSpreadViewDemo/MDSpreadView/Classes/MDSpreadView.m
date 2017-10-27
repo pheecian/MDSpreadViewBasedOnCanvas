@@ -169,7 +169,7 @@
 
 
 @property (nonatomic, strong) MDSpreadViewSelection *_currentSelection;
-@property (nonatomic, strong) MDSpreadViewSelection *_currentComment;
+
 
 
 
@@ -197,9 +197,9 @@
 @synthesize dataSource=_dataSource;
 @synthesize selectionMode;
 @synthesize _currentSelection, allowsMultipleSelection, allowsSelection;
-@synthesize rowHeaderHide, rowFrozen, availableRow, tag, columnFrozen, columnHeaderHide, availableColumn;
-@synthesize _currentComment;
-@synthesize scaleAndSetContentOffset;
+
+
+
 
 
 
@@ -227,12 +227,7 @@
 
 - (void)_performInit
 {
-    availableRow = -1;
-    availableColumn = -1;
-    rowFrozen = 0;
-    columnFrozen = 0;
-    rowHeaderHide = NO;
-    columnHeaderHide = NO;
+    
     self.opaque = YES;
     self.backgroundColor = [UIColor whiteColor];
     self.directionalLockEnabled = YES;
@@ -426,7 +421,7 @@
         
         
         
-        for (NSInteger j = availableColumn; j < (NSInteger)numberOfColumns; j++) {
+        for (NSInteger j = -1; j < (NSInteger)numberOfColumns; j++) {
             totalWidth += [self _widthForColumnAtIndexPath:j];
         }
         
@@ -448,7 +443,7 @@
         
         
         
-        for (NSInteger j = availableRow; j < (NSInteger)numberOfRows; j++) {
+        for (NSInteger j = -1; j < (NSInteger)numberOfRows; j++) {
             
             totalHeight += [self _heightForRowAtIndexPath:j];
         }
@@ -612,7 +607,7 @@
     
     // find min row index
     float deltaForSpeed = bounds.origin.y;
-    for (NSInteger row = availableRow; row < numberOfRows; row++) { // take into account header and footer
+    for (NSInteger row = -1; row < numberOfRows; row++) { // take into account header and footer
         
         CGFloat height = [self _heightForRowAtIndexPath:row];
         
@@ -630,7 +625,7 @@
     // find max row index
     deltaForSpeed = - bounds.origin.y - bounds.size.height;
     
-    for (NSInteger row = numberOfRows-1; row >= availableRow; row--) { // take into account header and footer
+    for (NSInteger row = numberOfRows-1; row >= -1; row--) { // take into account header and footer
         CGFloat height = [self _heightForRowAtIndexPath:row];
         
         if (height && deltaForSpeed  +  _visibleBounds.origin.y + _visibleBounds.size.height  < height ) {
@@ -656,7 +651,7 @@
     NSInteger numberOfColumns = section2.numberOfCells;
     
     // find min column index
-    for (NSInteger column = availableColumn; column < numberOfColumns; column++) { // take into account header and footer
+    for (NSInteger column = -1; column < numberOfColumns; column++) { // take into account header and footer
         CGFloat width = [self _widthForColumnAtIndexPath:column];
         
         if (width && _visibleBounds.origin.x + width > bounds.origin.x) {
@@ -671,7 +666,7 @@
     
     
     // find max column index
-    for (NSInteger column = numberOfColumns-1; column >= availableColumn; column--) { // take into account header and footer
+    for (NSInteger column = numberOfColumns-1; column >= -1; column--) { // take into account header and footer
         CGFloat width = [self _widthForColumnAtIndexPath:column];
         
         if (width && _visibleBounds.origin.x + _visibleBounds.size.width - width < bounds.origin.x + bounds.size.width) {
@@ -1859,14 +1854,7 @@
     
     BOOL shouldHighlight = NO;
     
-    if (_currentComment) {
-        
-        if (cell._rowPath == _currentComment.rowPath) {
-            if (cell._columnPath == _currentComment.columnPath) {
-                shouldHighlight = YES;
-            }
-        }
-    }
+    
     
     [cell setHighlighted:shouldHighlight animated:NO];
     
@@ -1966,14 +1954,7 @@
     
     BOOL shouldHighlight = NO;
     
-    if (_currentComment) {
-        
-        if (cell._rowPath == _currentComment.rowPath) {
-            if (cell._columnPath == _currentComment.columnPath) {
-                shouldHighlight = YES;
-            }
-        }
-    }
+   
     
     [cell setHighlighted:shouldHighlight animated:NO];
     
@@ -2368,13 +2349,7 @@
 #pragma mark — Sizes
 - (CGFloat)_widthForColumnHeaderInSection
 {
-    if (columnHeaderHide)
-        
-    {
-        
-        return 0;
-        
-    }
+    
     
     if ([self.dataSource respondsToSelector:@selector(widthForColumnHeaderInSection)]) {
         return [self.dataSource widthForColumnHeaderInSection];
@@ -2404,13 +2379,7 @@
 
 - (CGFloat)_heightForRowHeaderInSection
 {
-    if (rowHeaderHide)
-        
-    {
-        
-        return 0;
-        
-    }
+   
     if ([self.dataSource respondsToSelector:@selector(heightForRowHeaderInSection)]) {
         return [self.dataSource heightForRowHeaderInSection];
     }
@@ -2443,7 +2412,7 @@
 
 - (NSInteger)_numberOfColumnsInSection
 {
-    if (columnFrozen>0) return columnFrozen;
+    
     
     NSInteger returnValue = 0;
     
@@ -2455,7 +2424,7 @@
 
 - (NSInteger)_numberOfRowsInSection
 {
-    if (rowFrozen>0) return rowFrozen;
+    
     
     NSInteger returnValue = 0;
     
@@ -2761,13 +2730,13 @@
         [self _addSelection:newSelection animated:YES notify:YES];
         
         CGFloat height = 0;
-        for (NSInteger rowIter = availableRow; rowIter < row; rowIter++) { // take into account header and footer
+        for (NSInteger rowIter = -1; rowIter < row; rowIter++) { // take into account header and footer
             
             height += [self _heightForRowAtIndexPath:rowIter];
             
         }
         CGFloat width = 0;
-        for (NSInteger columnIter = availableColumn; columnIter < column; columnIter++) { // take into account header and footer
+        for (NSInteger columnIter = -1; columnIter < column; columnIter++) { // take into account header and footer
             
             width += [self _widthForColumnAtIndexPath:columnIter];
             
@@ -2915,10 +2884,7 @@
             [cell setBackgroundColor:[UIColor grayColor]];
             [cell setNewFontColor:[UIColor whiteColor]];
         }
-        else if(rowFrozen > 0){
-            [cell setBackgroundColor:[UIColor grayColor]];
-            [cell setNewFontColor:[UIColor whiteColor]];
-        } else {
+        else {
             [cell setBackgroundColor:[UIColor whiteColor]];
             [cell setNewFontColor:[UIColor grayColor]];
         }
@@ -3038,8 +3004,7 @@
 
 - (void)_didTouchScroll
 {
-    if ([self.delegate respondsToSelector:@selector(spreadView:tag:)])
-        [self.delegate spreadView:self tag:(int)self.tag];
+    
 }
 
 #pragma mark - Sorting
@@ -3066,11 +3031,7 @@
 
 -(void)setContentOffset:(CGPoint)contentOffset animated:(BOOL)animated
 {
-    if(self.scaleAndSetContentOffset){
-        self.scaleAndSetContentOffset = NO;
-        [super setContentOffset:contentOffset animated:animated];
-        return;
-    }
+    
     if(!(self.contentSize.width <= 0 || self.contentSize.height <=0)){
         if(contentOffset.x + self.frame.size.width> self.contentSize.width){
             contentOffset.x = self.contentSize.width - self.frame.size.width;
@@ -3118,29 +3079,12 @@
     }
     
     
-    MDSpreadViewSelection *selection = [MDSpreadViewSelection selectionWithRow:rowPath column:columnPath mode:MDSpreadViewSelectionModeNone];
-    self._currentComment = selection;
+    
+   
     [self.canvas setNeedsDisplay];
     
 }
 
-- (void)unhighlightComment{
-    NSMutableSet *allVisibleCells = [NSMutableSet setWithArray:_canvas.mapForContent.allCells];
-    
-    
-    for (MDSpreadViewCell *cell in allVisibleCells) {
-        if (cell._rowPath == _currentComment.rowPath && cell._columnPath == _currentComment.columnPath) {
-            cell.backgroundColor = cell.formerColor;
-        }
-    }
-    
-    
-    
-    self._currentComment = nil;
-    self.canvas.canvasReady = NO;
-    [self.canvas setNeedsDisplay];
-    
-}
 
 
 
@@ -3149,25 +3093,11 @@
     [self setContentOffset:CGPointMake(rect.origin.x, rect.origin.y) animated:NO];
 }
 
-- (void)setGridCellHasComment:(int)row column:(int)column hasComment:(BOOL)hasComment{
-    for ( MDSpreadViewCell * cell in [_canvas.mapForContent allCells]){
-        if(cell._rowPath == row && cell._columnPath == column){
-            [cell setHideIndicator:!hasComment];
-            break;
-        }
-    }
-}
 
 
 
-- (void)setGridCellHasDataValidation:(int)row column:(int)column hasDataValidation:(BOOL)hasDataValidation{
-    for ( MDSpreadViewCell * cell in [_canvas.mapForContent allCells]){
-        if(cell._rowPath == row && cell._columnPath == column){
-            [cell setHideDataValidation:!hasDataValidation];
-            break;
-        }
-    }
-}
+
+
 
 
 - (void)clearCanvas{

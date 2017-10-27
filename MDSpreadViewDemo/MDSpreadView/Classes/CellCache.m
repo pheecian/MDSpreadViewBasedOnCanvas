@@ -1,10 +1,3 @@
-//
-//  CellCache.m
-//  company-ess-ios
-//
-//  Created by worksap on 10/27/16.
-//  Copyright © 2016 worksap. All rights reserved.
-//
 
 #import "CellCache.h"
 

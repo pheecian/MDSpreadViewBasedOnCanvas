@@ -176,8 +176,7 @@ typedef NS_ENUM(NSUInteger, VerticalAlignment)
 -(void)setVAlign:(VerticalAlignment)vAlign;
 -(void)setNewUnderline:(BOOL)newUnderline;
 -(void)setNewStrikeThrough:(BOOL)newStrikeThrough;
--(void)setHideIndicator:(BOOL)hideIndicatorImage;
--(void)setHideDataValidation:(BOOL)hideDataValidationImage;
+
 - (void)prepareForReuse;
 - (void)setSelected:(BOOL)isSelected animated:(BOOL)animated;
 

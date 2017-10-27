@@ -1,10 +1,3 @@
-//
-//  MDIndexPath.m
-//  company-ess-ios
-//
-//  Created by worksap on 10/12/16.
-//  Copyright © 2016 worksap. All rights reserved.
-//
 
 #import "MDIndexPath.h"
 
