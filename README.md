@@ -1,7 +1,7 @@
-MDSpreadView Demo
+MDSpreadViewBasedOnCanvas
 =================
 
-![Screenshot](https://github.com/mochidev/MDSpreadViewDemo/raw/master/Artwork/Screenshot.png)
+![Screenshot](https://github.com/mochidev/MDSpreadViewDemo/raw/master/Artwork/IMG_0002.png)
 
 Purpose
 -------
