@@ -1,7 +1,7 @@
 MDSpreadViewBasedOnCanvas
 =================
 
-![Screenshot](https://github.com/pheecian/MDSpreadViewBasedOnCanvas/raw/master/Artwork/IMG_0002.png)
+![Screenshot](https://github.com/pheecian/MDSpreadViewBasedOnCanvas/raw/master/Artwork/IMG_0002.PNG)
 
 Purpose
 -------
